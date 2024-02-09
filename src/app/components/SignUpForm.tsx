@@ -11,12 +11,15 @@ import {
 import { Button, Checkbox, Input } from "@nextui-org/react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { z, refine } from "zod";
+import { z } from "zod";
 import validator from "validator";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { passwordStrength } from "check-password-strength";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import PasswordStrength from './PasswordStrength';
+import { registerUser } from "@/lib/actions/authAction";
 
 const FormSchema = z
   .object({
@@ -77,7 +80,15 @@ const SignUpForm = () => {
     setIsVisibleConfirmPass((prev) => !prev);
 
   const saveUser: SubmitHandler<InputType> = async (data) => {
-    console.log({ data });
+    // console.log({ data });
+    const {accepted, confirmPassword, ...user} = data;
+    try {
+      const result = await registerUser(user);
+      toast.success("The User Registred Successfully.");
+    } catch (error) {
+      toast.error("Something Went Wrong.");
+      console.error(error);
+    }
   };
 
   useEffect(() => {
