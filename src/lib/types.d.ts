@@ -6,11 +6,10 @@ declare module "next-auth" {
         user: User
     }
 }
+// then run npx prisma generate
 
 declare module "next-auth/jwt" {
     interface JWT {
       user: User;
     }
   }
-
-// then run npx prisma generate
