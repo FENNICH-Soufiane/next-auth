@@ -32,8 +32,12 @@ const authOptions: NextAuthOptions = {
 
         if (!user) throw new Error("User name or password is not correct");
         if(!credentials?.password) throw new Error("Please provide your password");
+
         const isPasswordCorrect = await bcrypt.compare(credentials?.password, user.password);
         if(!isPasswordCorrect) throw new Error("User name or password is not correct");
+
+        if(!user.emailVerified) throw new Error("Please verify your email first!");
+
         const {password, ...userWithoutPass} = user;
         return userWithoutPass;
       },
