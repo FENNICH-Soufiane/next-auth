@@ -1,6 +1,7 @@
 import Handlebars from "handlebars";
 import nodemailer from "nodemailer";
 import { activationTemplate } from "./emailTemplate/activation";
+import { resetPasswordTemplate } from "./emailTemplate/resetPass";
 
 export async function sendMail({
   to,
@@ -36,9 +37,9 @@ export async function sendMail({
   // si tout va bien il renvoie <Test Result Of Transport true>
   try {
     const testResult = await transport.verify();
-    console.log("Test Result Of Transport", testResult);
+    // console.log("Test Result Of Transport", testResult);
   } catch (e) {
-    console.log("error ", e);
+    // console.log("error ", e);
   }
 
   try {
@@ -48,7 +49,7 @@ export async function sendMail({
       subject,
       html: body,
     });
-    console.log(sendResult);
+    // console.log(sendResult);
   } catch (error) {
     console.log(error);
   }
@@ -61,4 +62,13 @@ export function compileActivationTemplate(name: string, url: string) {
       url
    });
    return htmlBody;
+}
+
+export function compileResetPassTemplate(name: string, url: string) {
+  const template = Handlebars.compile(resetPasswordTemplate);
+  const htmlBody = template({
+     name,
+     url
+  });
+  return htmlBody;
 }

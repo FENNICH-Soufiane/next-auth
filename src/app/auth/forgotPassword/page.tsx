@@ -7,6 +7,8 @@ import { z } from "zod";
 import { Button, Input } from "@nextui-org/react";
 import { EnvelopeIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
+import { forgotPassword } from "@/lib/actions/authAction";
+import { toast } from "react-toastify";
 
 
 const FormSchema = z.object({
@@ -25,9 +27,48 @@ const ForgotPassword = () => {
     resolver: zodResolver(FormSchema),
   });
 
-  const submitRequest:SubmitHandler<InputType> =async (data) => {
-    console.log(data)
+  // const submitRequest:SubmitHandler<InputType> =async (data) => {
+  //   // console.log(data) pour afficher les données saisi
+  //   try {
+  //     const result = await forgotPassword(data.email);
+  //     if(result) toast.success('Reset password link was send to your email');
+  //     console.log(result);
+  //     reset();
+  //   } catch(e) {
+  //     toast.error("Something went wrong!");
+  //     // console.log(e);
+  //   }
+  // }
+  
+// const submitRequest: SubmitHandler<InputType> = async (data) => {
+//   try {
+//     const result = await forgotPassword(data.email);
+//     console.log("cest vreais");
+//     if (result !== undefined) {
+//       toast.success('Reset password link has been sent to your email');
+//       console.log("++++++++" + result);
+//       reset(); // Réinitialiser le formulaire après l'envoi réussi
+//     } else {
+//       console.log("+" + result);
+//       toast.error('Failed to send reset password link. Please try again later.');
+//     }
+//   } catch (error) {
+//     toast.error('Something went wrong while sending reset password link. Please try again later.');
+//     console.error(error);
+//   }
+// }
+
+const submitRequest: SubmitHandler<InputType> = async (data) => {
+  try {
+    const result = await forgotPassword(data.email);
+    // if (result) toast.success("Reset password link was sent to your email.");
+    toast.success("Reset password link was sent to your email.");
+    reset();
+  } catch (e) {
+    console.log(e);
+    toast.error("Something went wrong!");
   }
+};
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 items-center">

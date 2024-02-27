@@ -9,7 +9,7 @@ interface Props {
 }
 
 const SigninPage = ({searchParams}: Props) => {
-   console.log({searchParams});
+  //  console.log({searchParams});
    
   return (
     <div className="flex items-center justify-center flex-col w-1/2 mx-auto">
