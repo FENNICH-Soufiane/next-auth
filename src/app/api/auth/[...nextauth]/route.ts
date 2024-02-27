@@ -6,9 +6,15 @@ import { PrismaClient } from '@prisma/client'
 import { User } from "@prisma/client";
 
 const prisma = new PrismaClient();
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/signin"
+  },
+  session: {
+    strategy: "jwt"
+  },
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
   },
   // Configure one or more authentication providers
   providers: [
